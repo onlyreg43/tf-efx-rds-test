@@ -13,26 +13,22 @@ version = "~> 2.0"
 region = "us-east-2"
 }
 
-##############################################################
-# Data sources to get VPC, subnets and security group details
-##############################################################
-data "aws_vpc" "default" 
-{
-  default = true
+
+#Data sources to get VPC, subnets and security group details
+data "aws_vpc" "default" {
+default = true
 }
 
-data "aws_subnet_ids" "all" 
-{
-  vpc_id = data.aws_vpc.default.id
+data "aws_subnet_ids" "all" {
+vpc_id = data.aws_vpc.default.id
 }
 
-data "aws_security_group" "default" 
-{
-  vpc_id = data.aws_vpc.default.id
-  name   = "default"
+data "aws_security_group" "default" {
+vpc_id = data.aws_vpc.default.id
+name   = "default"
 }
 
-resource "aws_security_group" "orcdb-test" 
+resource "aws_security_group" "orcdb-test"
 {
   name = "orcdb-test"
   description = "RDS Oracle servers (terraform-managed)"
