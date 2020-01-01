@@ -1,4 +1,4 @@
-# Terraform state will be stored in S3
+# Terraform state will be stored in S3 ok
 terraform {
   backend "s3" {
     bucket = "terraform-bucket-test-efx"
