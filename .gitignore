@@ -6,4 +6,3 @@
 .terraform/
 
 # Sensitive Files
-/variables.tf
