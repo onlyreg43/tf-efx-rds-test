@@ -13,7 +13,6 @@ version = "~> 2.0"
 region = "us-east-2"
 }
 
-
 #Data sources to get VPC, subnets and security group details
 data "aws_vpc" "default" {
 default = true
@@ -28,28 +27,27 @@ vpc_id = data.aws_vpc.default.id
 name   = "default"
 }
 
-resource "aws_security_group" "orcdb-test"
-{
+resource "aws_security_group" "orcdb-test" {
   name = "orcdb-test"
   description = "RDS Oracle servers (terraform-managed)"
   vpc_id = "${var.rds_vpc_id}"
 
-  # Only postgres in
-  ingress 
-  {
-    from_port = 1521
-    to_port = 1521
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+#Only postgres in
+ingress
+{
+   from_port = 1521
+   to_port = 1521
+   protocol = "tcp"
+   cidr_blocks = ["0.0.0.0/0"]
+}
 
-  # Allow all outbound traffic.
-  egress 
-  {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+# Allow all outbound traffic.
+egress 
+{
+   from_port = 0
+   to_port = 0
+   protocol = "-1"
+   cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
