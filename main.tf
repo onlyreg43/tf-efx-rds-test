@@ -15,13 +15,10 @@ provider "aws" {
 # Create EC2 instance
 resource "aws_instance" "default" {
   ami                    = "${var.ami}"
-  count                  = "${var.count-1}"
-  vpc_security_group_ids = ["${aws_security_group.default.id}"]
-  source_dest_check      = false
   instance_type          = "${var.instance_type}"
 
   tags = {
-    Name = "terraform-efx-default"
+    Name = "tf-efx-rds-tst"
   }
 }
 
