@@ -53,9 +53,8 @@ resource "aws_security_group" "orcdb-test" {
 #####
 # Create RDS instance
 #####
-module "db" {
-  source = "../../"
-
+resource "aws_db_instance" "demodb-orcl"
+{
   identifier = "demodb-oracle"
   engine            = "oracle-se1"
   engine_version    = "11.2.0.4.v22"
