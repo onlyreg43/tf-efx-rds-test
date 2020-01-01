@@ -30,7 +30,6 @@ data "aws_security_group" "default" {
 
 resource "aws_security_group" "orcdb-test" {
   name = "orcdb-test"
-
   description = "RDS Oracle servers (terraform-managed)"
   vpc_id = "${var.rds_vpc_id}"
 
