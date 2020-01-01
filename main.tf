@@ -8,9 +8,9 @@ terraform {
 }
 
 # Use AWS Terraform provider
-provider "aws" 
-{
-  region = "us-east-2"
+provider "aws"
+{  
+region = "us-east-2"
 }
 
 ##############################################################
