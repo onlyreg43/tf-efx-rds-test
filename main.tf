@@ -55,41 +55,32 @@ resource "aws_security_group" "orcdb-test" {
 #####
 resource "aws_db_instance" "demodb-orcl"
 {
-  identifier = "demodb-oracle"
+  identifier        = "demodb-oracle"
   engine            = "oracle-se1"
   engine_version    = "11.2.0.4.v22"
   instance_class    = "db.t3.micro"
   allocated_storage = 10
   storage_encrypted = false
   license_model     = "bring-your-own-license"
-
-  # Make sure that database name is capitalized, otherwise RDS will try to recreate RDS instance every time
-  name                                = "DEMO-EFX-DB"
-  username                            = "rj-efx-tst"
-  password                            = "rj-efx-tst-12!"
-  port                                = "1521"
+  name              = "DEMO-EFX-DB"
+  username          = "rj-efx-tst"
+  password          = "rj-efx-tst-12!"
+  port              = "1521"
   iam_database_authentication_enabled = false
-
   vpc_security_group_ids = [data.aws_security_group.default.id]
-  
+  # DB subnet group
+  subnet_ids = data.aws_subnet_ids.all.ids
+  # DB parameter group
+  family = "oracle-se1-11-2"
+  # DB option group
+  major_engine_version = "11.2"
+  # character sets 
+  character_set_name = "AL32UTF8"
+  # Database Deletion Protection
+  deletion_protection = false
+
   tags = {
     Owner       = "user"
     Environment = "dev"
   }
-
-  # DB subnet group
-  subnet_ids = data.aws_subnet_ids.all.ids
-
-  # DB parameter group
-  family = "oracle-se1-11-2"
-
-  # DB option group
-  major_engine_version = "11.2"
-
-  # character sets 
-  character_set_name = "AL32UTF8"
-
-  # Database Deletion Protection
-  deletion_protection = false
-}
-
+  }
