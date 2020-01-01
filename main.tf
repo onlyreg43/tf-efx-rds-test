@@ -12,14 +12,63 @@ provider "aws" {
   region = "us-east-2"
 }
 
-# Create EC2 instance
-resource "aws_instance" "default" {
-  ami                    = "${var.ami}"
-  instance_type          = "${var.instance_type}"
-
-  tags = {
-    Name = "tf-efx-rds-tst"
-  }
+##############################################################
+# Data sources to get VPC, subnets and security group details
+##############################################################
+data "aws_vpc" "default" {
+  default = true
 }
 
+data "aws_subnet_ids" "all" {
+  vpc_id = data.aws_vpc.default.id
+}
+
+data "aws_security_group" "default" {
+  vpc_id = data.aws_vpc.default.id
+  name   = "default"
+}
+
+#####
+# Create RDS instance
+#####
+module "db" {
+  source = "../../"
+
+  identifier = "demodb-oracle"
+  engine            = "oracle-se1"
+  engine_version    = "11.2.0.4.v22"
+  instance_class    = "db.t2.micro"
+  allocated_storage = 10
+  storage_encrypted = false
+  license_model     = "bring-your-own-license"
+
+  # Make sure that database name is capitalized, otherwise RDS will try to recreate RDS instance every time
+  name                                = "DEMO-EFX-DB"
+  username                            = "rj-efx-tst"
+  password                            = "rj-efx-tst-12!"
+  port                                = "1521"
+  iam_database_authentication_enabled = false
+
+  vpc_security_group_ids = [data.aws_security_group.default.id]
+  
+  tags = {
+    Owner       = "user"
+    Environment = "dev"
+  }
+
+  # DB subnet group
+  subnet_ids = data.aws_subnet_ids.all.ids
+
+  # DB parameter group
+  family = "oracle-se1-11.2"
+
+  # DB option group
+  major_engine_version = "11.2"
+
+  # character sets 
+  character_set_name = "AL32UTF8"
+
+  # Database Deletion Protection
+  deletion_protection = false
+}
 
