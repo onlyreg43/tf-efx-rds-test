@@ -38,9 +38,9 @@ output "this_db_instance_username" {
   value       = aws_db_instance.this_db_instance_username
 }
 
-output "this_db_instance_password" {
+output "db.password" {
   description = "The database password (this password may be old, because Terraform doesn't track it after initial creation)"
-  value       = aws_db_instance.this_db_instance_password
+  value       = aws_db_instance.db.password
 }
 
 output "this_db_instance_port" {
