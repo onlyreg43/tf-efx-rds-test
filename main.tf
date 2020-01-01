@@ -67,16 +67,11 @@ resource "aws_db_instance" "demodb-orcl"
   port              = "1521"
   iam_database_authentication_enabled = false
   vpc_security_group_ids = [data.aws_security_group.default.id]
-  # DB subnet group
-  subnet_ids = data.aws_subnet_ids.all.ids
-  # DB parameter group
-  family = "oracle-se1-11-2"
-  # DB option group
-  major_engine_version = "11.2"
-  # character sets 
-  character_set_name = "AL32UTF8"
-  # Database Deletion Protection
-  deletion_protection = false
+  subnet_ids             = data.aws_subnet_ids.all.ids
+  family                 = "oracle-se1-11-2"
+  major_engine_version   = "11.2"
+  character_set_name     = "AL32UTF8"
+  deletion_protection    = false
 
   tags = {
     Owner       = "user"
