@@ -28,13 +28,15 @@ data "aws_security_group" "default" {
   name   = "default"
 }
 
-resource "aws_security_group" "orcdb-test" {
+resource "aws_security_group" "orcdb-test" 
+{
   name = "orcdb-test"
   description = "RDS Oracle servers (terraform-managed)"
   vpc_id = "${var.rds_vpc_id}"
 
   # Only postgres in
-  ingress {
+  ingress 
+  {
     from_port = 1521
     to_port = 1521
     protocol = "tcp"
@@ -42,7 +44,8 @@ resource "aws_security_group" "orcdb-test" {
   }
 
   # Allow all outbound traffic.
-  egress {
+  egress 
+  {
     from_port = 0
     to_port = 0
     protocol = "-1"
@@ -50,9 +53,7 @@ resource "aws_security_group" "orcdb-test" {
   }
 }
 
-#####
-# Create RDS instance
-#####
+#Create RDS instance
 resource "aws_db_instance" "demodb-orcl"
 {
   identifier        = "demodb-oracle"
