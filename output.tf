@@ -40,7 +40,7 @@ output "this_db_instance_username" {
 
 output "db.password" {
   description = "The database password (this password may be old, because Terraform doesn't track it after initial creation)"
-  value       = aws_db_instance.db.password
+  value       = aws_db_instance.demodb-orcl.db.password
 }
 
 output "this_db_instance_port" {
