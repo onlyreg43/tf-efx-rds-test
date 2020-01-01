@@ -52,8 +52,7 @@ egress {
 }
 
 #Create RDS instance
-resource "aws_db_instance" "demodb-orcl"
-{
+resource "aws_db_instance" "demodb-orcl" {
   identifier        = "demodb-oracle"
   engine            = "oracle-se1"
   engine_version    = "11.2.0.4.v22"
@@ -77,4 +76,4 @@ resource "aws_db_instance" "demodb-orcl"
     Owner       = "user"
     Environment = "dev"
   }
-  }
+}
