@@ -8,8 +8,8 @@ terraform {
 }
 
 #Use AWS Terraform provider
-provider "aws"
-{
+provider "aws" {
+version = "~> 2.0"
 region = "us-east-2"
 }
 
