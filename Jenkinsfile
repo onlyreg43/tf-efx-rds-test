@@ -84,7 +84,7 @@ try {
           secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
           ansiColor('xterm') {
-            sh '/efx01/terraform-efx/terraform destroy'
+            sh '/efx01/terraform-efx/terraform destroy -auto-approve'
           }
         }
       }
