@@ -53,32 +53,6 @@ egress {
   }
 }
 
-
-#Create RDS instance
-resource "aws_db_instance" "demodb-orcl" {
-  identifier        = "demodb-oracle"
-  engine            = "oracle-se1"
-  engine_version    = "11.2.0.4.v22"
-  instance_class    = "db.t3.micro"
-  allocated_storage = 10
-  storage_encrypted = false
-  license_model     = "bring-your-own-license"
-  name              = "DEMO-EFX-DB"
-  username          = "rj-efx-tst"
-  password          = "rj-efx-tst-12!"
-  port              = "1521"
-  iam_database_authentication_enabled = false
-  vpc_security_group_ids = [data.aws_security_group.default.id]
-  subnet_ids             = data.aws_subnet_ids.all.ids
-  family                 = "oracle-se1-11-2"
-  major_engine_version   = "11.2"
-  character_set_name     = "AL32UTF8"
-  deletion_protection    = false
-
-  tags = {
-    Owner       = "user"
-    Environment = "dev"
-  }
 ##############################################################################################################
 # Create RDS Oracle DB
 ##############################################################################################################
@@ -108,7 +82,7 @@ module "db" {
   deletion_protection    = false
   
   tags = {
-    Owner       = "NT"
-    Environment = "Development"
+    Owner       = "user"
+    Environment = "efx-Dev"
   }
 }
