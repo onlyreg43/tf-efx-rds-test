@@ -69,7 +69,7 @@ module "db" {
   storage_encrypted = false
   license_model     = "bring-your-own-license"
   # Make sure that database name is capitalized, otherwise RDS will try to recreate RDS instance every time
-  name                                = "DEMOEFXDBRJ"
+  name                                = "DEMOEFX"
   username                            = "efxdba"
   password                            = "efxdba2019"
   port                                = "1521"
