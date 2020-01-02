@@ -13,18 +13,20 @@ version = "~> 2.0"
 region = "us-east-2"
 }
 
-#Data sources to get VPC, subnets and security group details
+##############################################################
+# Data sources to get VPC, subnets and security group details
+##############################################################
 data "aws_vpc" "default" {
-default = true
+  default = true
 }
 
 data "aws_subnet_ids" "all" {
-vpc_id = data.aws_vpc.default.id
+  vpc_id = data.aws_vpc.default.id
 }
 
 data "aws_security_group" "default" {
-vpc_id = data.aws_vpc.default.id
-name   = "default"
+  vpc_id = data.aws_vpc.default.id
+  name   = "default"
 }
 
 resource "aws_security_group" "orcdb-test" {
@@ -51,6 +53,7 @@ egress {
   }
 }
 
+
 #Create RDS instance
 resource "aws_db_instance" "demodb-orcl" {
   identifier        = "demodb-oracle"
@@ -75,5 +78,37 @@ resource "aws_db_instance" "demodb-orcl" {
   tags = {
     Owner       = "user"
     Environment = "dev"
+  }
+##############################################################################################################
+# Create RDS Oracle DB
+##############################################################################################################
+module "db" {
+  source  = "terraform-aws-modules/rds/aws"
+  version = "~> 2.0"
+
+  identifier = "demodb-oracle"
+
+  engine            = "oracle-se1"
+  engine_version    = "11.2.0.4.v22"
+  instance_class    = "db.t3.micro"
+  allocated_storage = 10
+  storage_encrypted = false
+  license_model     = "bring-your-own-license"
+  # Make sure that database name is capitalized, otherwise RDS will try to recreate RDS instance every time
+  name                                = "DEMO-EFX-DB"
+  username                            = "efxdba"
+  password                            = "efxdba2019"
+  port                                = "1521"
+  iam_database_authentication_enabled = false
+  vpc_security_group_ids = [data.aws_security_group.default.id]
+  subnet_ids             = data.aws_subnet_ids.all.ids
+  family                 = "oracle-se1-11-2"
+  major_engine_version   = "11.2"
+  character_set_name     = "AL32UTF8"
+  deletion_protection    = false
+  
+  tags = {
+    Owner       = "NT"
+    Environment = "Development"
   }
 }
