@@ -84,7 +84,10 @@ module "db" {
   backup_window          = "03:00-06:00"
   #disable backups to create DB faster
   backup_retention_period = 0
-
+  publicly_accessible    = true
+  skip_final_snapshot    = true
+  multi_az               = false
+  
   tags = {
     Owner       = "user"
     Environment = "efx-Dev"
