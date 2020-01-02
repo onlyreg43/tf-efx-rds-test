@@ -62,7 +62,7 @@ module "db" {
 
   identifier = "demodb-oracle"
 
-  engine            = "oracle-se"
+  engine            = "oracle-se1"
   engine_version    = "11.2.0.4.v22"
   instance_class    = "db.t3.micro"
   allocated_storage = 10
@@ -76,7 +76,7 @@ module "db" {
   iam_database_authentication_enabled = false
   vpc_security_group_ids = [data.aws_security_group.default.id]
   subnet_ids             = data.aws_subnet_ids.all.ids
-  family                 = "oracle-se-11-2"
+  family                 = "oracle-se1-11.2"
   major_engine_version   = "11.2"
   character_set_name     = "AL32UTF8"
   deletion_protection    = false
