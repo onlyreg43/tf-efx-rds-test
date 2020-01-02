@@ -80,7 +80,11 @@ module "db" {
   major_engine_version   = "11.2"
   character_set_name     = "AL32UTF8"
   deletion_protection    = false
-  
+  maintenance_window     = "Mon:00:00-Mon:03:00"
+  backup_window          = "03:00-06:00"
+  #disable backups to create DB faster
+  backup_retention_period = 0
+
   tags = {
     Owner       = "user"
     Environment = "efx-Dev"
