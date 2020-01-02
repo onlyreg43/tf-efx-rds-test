@@ -74,9 +74,8 @@ try {
         }
       }
     }
-  }
-
-stage('destroy') {
+    // Run terraform destroy
+    stage('Destroy') {
       node {
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',
